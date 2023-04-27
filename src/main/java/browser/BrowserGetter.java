@@ -3,6 +3,7 @@ package browser;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
 import static java.lang.System.setProperty;
@@ -28,6 +29,8 @@ public class BrowserGetter {
         }
         if (IS_OS_WINDOWS) {
             setProperty("webdriver.chrome.driver", "src/test/resources/browserBinaries/chromedriver.exe");
+            ChromeOptions options = new ChromeOptions();
+            options.addArguments("--remote-allow-origins=*");
         }
         if (IS_OS_LINUX) {
             setProperty("webdriver.chrome.driver", "src/test/resources/browserBinaries/chromedriver");
@@ -35,8 +38,9 @@ public class BrowserGetter {
         if (IS_OS_MAC) {
             setProperty("webdriver.chrome.driver", "src/test/resources/browserBinaries/chromedriverMac");
         }
-
-        WebDriver driver = new ChromeDriver();
+        ChromeOptions options = new ChromeOptions();
+        options.addArguments("--remote-allow-origins=*");
+        WebDriver driver = new ChromeDriver(options);
         driver.manage().window().maximize();
         return driver;
     }
